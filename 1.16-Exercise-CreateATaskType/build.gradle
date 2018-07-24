@@ -15,3 +15,15 @@ Exercises:
 4. Run the "hello" task and observe the output.
 
 */
+class HelloTask extends DefaultTask {
+    String firstName
+    
+    @TaskAction
+    public void sayHello() {
+        println "Hello, $firstName";
+    }
+}
+
+task Hello(type : HelloTask) {
+    firstName = "Serge"
+}

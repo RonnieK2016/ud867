@@ -16,13 +16,13 @@ To complete the latter task, check out:
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.3"
 
     defaultConfig {
         applicationId "com.example.android.clickcounter"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
