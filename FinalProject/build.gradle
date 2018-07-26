@@ -19,3 +19,11 @@ allprojects {
         google()
     }
 }
+
+task jokeTestTask(dependsOn: [":backend:appengineRun",
+                              ":app:connectedAndroidTest",
+                              ':backend:appengineStop']) {
+    doLast {
+        println 'Testing completed!'
+    }
+}
