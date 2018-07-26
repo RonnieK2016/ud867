@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +22,15 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 import java.io.IOException;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EndpointsAsyncTask.AsyncTaskCallBack {
+
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mProgressBar = findViewById(R.id.tell_joke_pb);
     }
 
 
@@ -60,9 +64,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJokeAndroidLib(View view) {
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
         new EndpointsAsyncTask(this).execute();
     }
 
 
+    @Override
+    public void onTaskFinished(String result) {
 
+        mProgressBar.setVisibility(View.GONE);
+        Intent intent = new Intent(this, TellJokeActivity.class);
+        intent.putExtra(Intent.EXTRA_TEXT, result);
+        this.startActivity(intent);
+    }
 }

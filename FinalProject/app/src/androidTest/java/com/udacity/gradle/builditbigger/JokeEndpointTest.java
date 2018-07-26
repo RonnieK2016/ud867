@@ -18,7 +18,7 @@ public class JokeEndpointTest extends ApplicationTestCase<Application> {
 
     public void testNonEmptyJoke() {
         String resultJoke = null;
-        EndpointsAsyncTask tellJokeTask = new EndpointsAsyncTask(getContext());
+        EndpointsAsyncTask tellJokeTask = new EndpointsAsyncTask();
         tellJokeTask.execute();
         try {
             resultJoke = tellJokeTask.get();

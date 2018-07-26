@@ -3,6 +3,8 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.android.jokesandroidlibrary.TellJokeActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -20,14 +22,18 @@ import java.io.IOException;
 //as per step 2 getting jokes from endpoint
 public class EndpointsAsyncTask extends AsyncTask<String, Void, String> {
     private MyApi myApiService = null;
-    private Context mContext;
+    private AsyncTaskCallBack mCallBack;
 
-    public EndpointsAsyncTask(Context context) {
-        this.mContext = context;
+    public EndpointsAsyncTask() {
+    }
+
+    public EndpointsAsyncTask(AsyncTaskCallBack callBack) {
+        this.mCallBack = callBack;
     }
 
     @Override
     protected String doInBackground(String... params) {
+
         if (myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -51,8 +57,13 @@ public class EndpointsAsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Intent intent = new Intent(mContext, TellJokeActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, result);
-        mContext.startActivity(intent);
+
+        if(result != null && mCallBack != null) {
+            mCallBack.onTaskFinished(result);
+        }
+    }
+
+    public interface AsyncTaskCallBack {
+        void onTaskFinished(String result);
     }
 }
