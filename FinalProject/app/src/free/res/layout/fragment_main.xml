@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/instructions_text_view"
+        android:id="@+id/tell_joke_btn"
         android:onClick="tellJokeAndroidLib"
         android:text="@string/button_text" />
 
