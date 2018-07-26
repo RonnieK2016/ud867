@@ -60,42 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJokeAndroidLib(View view) {
-        new EndpointsAsyncTask().execute();
+        new EndpointsAsyncTask(this).execute();
     }
 
-    //as per step 2 getting jokes from endpoint
-    private class EndpointsAsyncTask extends AsyncTask<String, Void, String> {
-        private MyApi myApiService = null;
 
-        @Override
-        protected String doInBackground(String... params) {
-            if (myApiService == null) {  // Only do this once
-                MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
-                        new AndroidJsonFactory(), null)
-                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
-                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                            @Override
-                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                                abstractGoogleClientRequest.setDisableGZipContent(true);
-                            }
-                        });
-                // end options for devappserver
-                myApiService = builder.build();
-            }
-
-            try {
-                return myApiService.tellJoke().execute().getData();
-            } catch (IOException e) {
-                return e.getMessage();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(MainActivity.this, TellJokeActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, result);
-            MainActivity.this.startActivity(intent);
-        }
-    }
 
 }
